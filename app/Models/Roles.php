@@ -10,6 +10,9 @@ class Roles extends Model
 {
     use HasFactory;
     
+    protected $fillable = [
+        'name',
+    ];
     /**
      * The roles codes.
      *  'usuario'=>0,           Puede entrar solo por dominio

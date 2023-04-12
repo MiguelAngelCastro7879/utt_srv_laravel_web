@@ -29,21 +29,23 @@ class AuthenticatedSessionController extends Controller
     {
         $roles = new Roles();
         $user = User::where('email', $request->input('email'))->first();
-        if($user->role_id == json_decode($roles->getRoles())->usuario && str_contains($request->url(), env('APP_URL_WEB'))){
-            $request->authenticate();
-            $request->session()->regenerate();
-            return redirect()->intended(RouteServiceProvider::HOME);
-        } 
-        else if($user->role_id == json_decode($roles->getRoles())->administrador && str_contains($request->url(), env('APP_URL_VPN'))){
-            $request->authenticate();
-            $request->session()->regenerate();
-            return redirect()->intended(RouteServiceProvider::HOME);
-        } 
-        else if($user->role_id == json_decode($roles->getRoles())->supervisor){
-            $request->authenticate();
-            $request->session()->regenerate();
-            return redirect()->intended(RouteServiceProvider::HOME);
-        } 
+        if($user){
+            if($user->role_id == json_decode($roles->getRoles())->usuario && str_contains($request->url(), env('APP_URL_WEB'))){
+                $request->authenticate();
+                $request->session()->regenerate();
+                return redirect()->intended(RouteServiceProvider::QR_CODE);
+            } 
+            else if($user->role_id == json_decode($roles->getRoles())->administrador && str_contains($request->url(), env('APP_URL_VPN'))){
+                $request->authenticate();
+                $request->session()->regenerate();
+                return redirect()->intended(RouteServiceProvider::QR_CODE);
+            } 
+            else if($user->role_id == json_decode($roles->getRoles())->supervisor){
+                $request->authenticate();
+                $request->session()->regenerate();
+                return redirect()->intended(RouteServiceProvider::QR_CODE);
+            } 
+        }
         return redirect('login');
     }
 

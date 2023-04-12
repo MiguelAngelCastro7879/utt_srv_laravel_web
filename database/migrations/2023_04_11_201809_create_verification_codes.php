@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('codes', function (Blueprint $table) {
+        Schema::create('verification_codes', function (Blueprint $table) {
             $table->id();
+            
             $table->string('login_code');
             $table->string('login_code_confirmation');
             $table->string('verify_code');
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('codes');
+        Schema::dropIfExists('verification_codes');
     }
 };

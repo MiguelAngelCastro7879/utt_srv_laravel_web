@@ -18,6 +18,10 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     public const HOME = '/dashboard';
+    
+    public const VERIFY_CODE = '/verify/code';
+    
+    public const QR_CODE = '/qrcode';
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
