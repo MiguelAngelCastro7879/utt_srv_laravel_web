@@ -8,8 +8,8 @@
 </head>
 <body>
     <h1>Verificacion</h1>
-    <p>En este enlace habrá un codigo que debes meter en tu apkiacion de autenticacion</p>
-    <p>Entra a este enlace para continuar con tu inicio de sesion </p> 
+    <p>En este enlace habrá un código que debes meter en tu apliación de autenticación</p>
+    <p>Entra a este enlace para continuar con tu inicio de sesión </p> 
     <a href="{{$code}}"> {{ $code }}</a>
 </body>
 </html>
