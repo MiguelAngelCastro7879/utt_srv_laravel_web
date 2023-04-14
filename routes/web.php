@@ -4,7 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QrCodeController;
 use App\Http\Controllers\VerificationCodeController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Games\CategoryController;
+use App\Http\Controllers\Games\GamesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,9 +25,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified', 'code_verified'])->name('dashboard');
 
-Route::get('/catalogos', function () {
-    return view('Dashboard/catalog');
-})->middleware(['auth', 'verified', 'code_verified'])->name('catalogos');
+Route::get('/Videojuegos', [GamesController::class, 'index'])->middleware(['auth', 'verified', 'code_verified'])->name('Videojuegos');
+
+Route::get('/Nuevo', [GamesController::class, 'new'])->middleware(['auth', 'verified', 'code_verified'])->name('Nuevo');
+// Route::post('/Nuevo', [GamesController::class, 'new'])->name('Nuevo');
 
 Route::middleware(['auth', 'code_verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

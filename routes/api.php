@@ -24,4 +24,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/validate/aplication/code', [VerificationCodeController::class, 'validate_code_application']);
 
 Route::resource('categories', CategoryController::class)->only(['index', 'store','update','destroy']);
-Route::resource('games', GamesController::class)->only(['index', 'store','update','destroy']);
+Route::resource('games', GamesController::class)->only(['index','update','destroy']);
+Route::post('/new_game', [GamesController::class, 'store'])->name('new.game');

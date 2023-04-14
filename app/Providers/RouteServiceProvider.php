@@ -18,6 +18,10 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     public const HOME = '/dashboard';
+
+    public const INDEX = '/Videojuegos';
+
+    public const GAMESFORMS = '/Nuevo';
     
     public const VERIFY_CODE = '/verify/code';
     
