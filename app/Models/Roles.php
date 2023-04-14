@@ -23,9 +23,9 @@ class Roles extends Model
      */
     public function getRoles(){
         return json_encode(array(
-            'usuario'=>0,
-            'supervisor'=>1,
-            'administrador'=>2,
+            'usuario'=>1,
+            'supervisor'=>2,
+            'administrador'=>3,
         ));
     }
 }
