@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\QrScannerEvent;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QrCodeController;
 use App\Http\Controllers\VerificationCodeController;
@@ -37,6 +38,10 @@ Route::post('/validate/login/code', [VerificationCodeController::class, 'validat
 
 Route::get('/qrcode', [QrCodeController::class, 'show'])->name('qr_code'); // Esta ruta es la que valida el codigo web
 
+Route::get('/scanner', function(){
+    event(new QrScannerEvent('hola'));
+    return 'fired';
+})->name('scanner'); // Esta ruta es la que valida el codigo web
 
 
 
