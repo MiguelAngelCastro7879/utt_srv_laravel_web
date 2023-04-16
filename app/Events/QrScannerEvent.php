@@ -32,7 +32,7 @@ class QrScannerEvent implements ShouldBroadcastNow
     public function broadcastOn()
     {
         return [
-            new PrivateChannel('qr-scanned'),
+            new Channel('qr-scanned'),
         ];
     }
     /**
@@ -44,4 +44,9 @@ class QrScannerEvent implements ShouldBroadcastNow
     {
         return ['user' => $this->user];
     }
+    
+  public function broadcastAs()
+  {
+      return 'scan';
+  }
 }
