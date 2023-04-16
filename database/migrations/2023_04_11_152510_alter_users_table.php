@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('role_id')->reference('id')->on('roles')->default(0);
+            $table->integer('role_id')->reference('id')->on('roles')->default(1);
         });
     }
 

@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\VerificationCodeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Games\CategoryController;
 use App\Http\Controllers\Games\GamesController;
+use App\Http\Controllers\QrCodeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +23,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::middleware('auth:sanctum')->post('/qrcode/verified', [QrCodeController::class, 'qr_verified'])->name('qr_verified'); // Esta ruta es la que valida el codigo web
+
 Route::post('/validate/aplication/code', [VerificationCodeController::class, 'validate_code_application']);
+
+Route::post('/login-app', [AuthenticatedSessionController::class, 'login_app']);
+
+Route::get('/login-app-error', function(){
+    return response()->json([
+        'message' => 'Unauthorized'
+    ], 401);
+})->name('login-app-error');
 
 Route::resource('categories', CategoryController::class)->only(['index', 'store','update','destroy']);
 Route::resource('games', GamesController::class)->only(['index', 'store','update','destroy']);

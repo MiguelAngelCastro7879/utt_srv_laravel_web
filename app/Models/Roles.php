@@ -15,11 +15,11 @@ class Roles extends Model
     ];
     /**
      * The roles codes.
-     *  'usuario'=>0,           Puede entrar solo por dominio
+     *  'usuario'=>1,           Puede entrar solo por dominio
      * 
-     *  'supervisor'=>1,        Puede entrar por cualquier lado
+     *  'supervisor'=>2,        Puede entrar por cualquier lado
      * 
-     *  'administrador'=>2,     Solo entra por VPN
+     *  'administrador'=>3,     Solo entra por VPN
      */
     public function getRoles(){
         return json_encode(array(

@@ -15,12 +15,13 @@ class QrScannerEvent implements ShouldBroadcastNow
 {
     // use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $user;
     /**
      * Create a new event instance.
      */
-    public function __construct($mensaje)
+    public function __construct($user)
     {
-        error_log($mensaje);
+        $this->user = $user;
     }
 
     /**
@@ -33,5 +34,14 @@ class QrScannerEvent implements ShouldBroadcastNow
         return [
             new PrivateChannel('qr-scanned'),
         ];
+    }
+    /**
+     * Get the data to broadcast.
+     *
+     * @return array<string, mixed>
+     */
+    public function broadcastWith(): array
+    {
+        return ['user' => $this->user];
     }
 }

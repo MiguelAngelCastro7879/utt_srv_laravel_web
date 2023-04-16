@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Models\Roles;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,17 +34,17 @@ class AuthenticatedSessionController extends Controller
             if($user->role_id == json_decode($roles->getRoles())->usuario && str_contains($request->url(), env('APP_URL_WEB'))){
                 $request->authenticate();
                 $request->session()->regenerate();
-                return redirect()->intended(RouteServiceProvider::QR_CODE);
+                return redirect()->intended(RouteServiceProvider::VERIFY_CODE);
             } 
             else if($user->role_id == json_decode($roles->getRoles())->administrador && str_contains($request->url(), env('APP_URL_VPN'))){
                 $request->authenticate();
                 $request->session()->regenerate();
-                return redirect()->intended(RouteServiceProvider::QR_CODE);
+                return redirect()->intended(RouteServiceProvider::VERIFY_CODE);
             } 
             else if($user->role_id == json_decode($roles->getRoles())->supervisor){
                 $request->authenticate();
                 $request->session()->regenerate();
-                return redirect()->intended(RouteServiceProvider::QR_CODE);
+                return redirect()->intended(RouteServiceProvider::VERIFY_CODE);
             } 
         }
         return redirect('login');
@@ -61,5 +62,25 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+    
+    public function login_app(Request $request)
+    {
+        
+        $credentials = request(['email', 'password']);
+
+        if (!Auth::attempt($credentials))
+            return response()->json([
+                'message' => 'Unauthorized'
+            ], 401);
+
+        $user = $request->user();
+        $tokenResult = $user->createToken('Personal Access Token');
+
+        
+        return response()->json([
+            'access_token' => $tokenResult->plainTextToken,
+            'token_type' => 'Bearer',
+        ]);
     }
 }

@@ -33,19 +33,19 @@ class DatabaseSeeder extends Seeder
             'name' => 'Miguel Angel Castro',
             'email' => 'mikeangel7879@gmail.com',
             'password' => Hash::make('1234567890'),
-            'role_id' => '0'
+            'role_id' => '1'
         ]);
         User::factory()->create([
             'name' => 'Supervisor',
             'email' => 'supervisor@gmail.com',
             'password' => Hash::make('1234567890'),
-            'role_id' => '1'
+            'role_id' => '2'
         ]);
         User::factory()->create([
             'name' => 'Administrador',
             'email' => 'Administrador@gmail.com',
             'password' => Hash::make('1234567890'),
-            'role_id' => '2'
+            'role_id' => '3'
         ]);
     }
 }
