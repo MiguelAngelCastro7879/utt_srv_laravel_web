@@ -35,4 +35,17 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+Route::get('/catalogos', function () {
+    return view('Dashboard/catalog');
+})->middleware(['auth', 'verified', 'code_verified'])->name('catalogos');
+
+// CODIGOS DE VERIFICACION
+Route::get('/verify_code', [VerificationCodeController::class, 'store'])->name('verify_code'); // Esta es la vista donde ingresas el codigo
+Route::get('/code', [VerificationCodeController::class, 'show'])->middleware('signed')->name('show_code'); // Esta es la vista que genera el mail
+Route::post('/validate/login/code', [VerificationCodeController::class, 'validate_code_login'])->name('last_code'); // Esta ruta es la que valida el codigo web
+
+Route::get('/qrcode', [QrCodeController::class, 'show'])->name('qr_code'); // Esta ruta es la que valida el codigo web
+
+
 require __DIR__.'/auth.php';
