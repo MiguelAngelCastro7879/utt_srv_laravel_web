@@ -19,7 +19,7 @@ class RouteServiceProvider extends ServiceProvider
      */
     public const HOME = '/dashboard';
     
-    public const VERIFY_CODE = '/verify/code';
+    public const VERIFY_CODE = '/verify_code';
     
     public const QR_CODE = '/qrcode';
 
