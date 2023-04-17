@@ -22,6 +22,8 @@ class RouteServiceProvider extends ServiceProvider
     public const INDEX = '/Videojuegos';
 
     public const GAMESFORMS = '/Nuevo';
+
+    public const ESTATUS = '/Estatus';
     
     public const VERIFY_CODE = '/verify/code';
     

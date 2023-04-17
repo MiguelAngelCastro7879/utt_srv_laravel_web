@@ -18,6 +18,9 @@
                     <x-nav-link :href="route('Videojuegos')" :active="request()->routeIs('Videojuegos')">
                         {{ __('Videojuegos') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('Estatus')" :active="request()->routeIs('Estatus')">
+                        {{ __('Estatus') }}
+                    </x-nav-link>
                 </div>
             </div>
 

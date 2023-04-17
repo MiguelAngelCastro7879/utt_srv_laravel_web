@@ -2,22 +2,30 @@
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <div class= "row">
-    <a href="{{ url('Nuevo') }}" class="btn btn-primary button">Nuevo</a>
+    <a href="{{ url('Nuevo') }}" class="btn btn-primary boton">Nuevo</a>
     </div>
     <div>
       @foreach ($games as $game)
       <div class="card-container">
-        <a href="{{ route('dashboard') }}"><div class="card">
-          <img src="images/logo.png" class="card-img-top" alt="...">
+        <div class="card">
+          <form method="POST" action="{{ route('destroy.game', ['id' => $game->id]) }}">
+            @csrf
+            @method('DELETE')
+          <button type="submit" style="float:right; margin-right:1em;" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </form>
+        <a href="{{ route('editar.registro', ['id' => $game->id]) }}"><img src="images/logo.png" class="card-img-top" alt="..."></a>
           <div class="card-body">
             <p class="card-text">{{ $game->name }} </p>
             <p class="card-text">{{ $game->category->name }} </p>
             <p class="card-text">${{ $game->price }} </p>
           </div>
-        </div></a>
+        </div>
       </div>
       @endforeach
     </div>
+    
 </x-app-layout>
 
 <style>
@@ -27,7 +35,7 @@ justify-content: space-between; /* align cards with equal spacing */
 
 }
 
-.button {
+.boton {
       transition-duration: 0.4s;
       border-radius: 12px;
       font-size: 15px;
@@ -40,15 +48,13 @@ justify-content: space-between; /* align cards with equal spacing */
       float: right;
     }
 
-    .button:hover {
+    .boton:hover {
       background-color: transparent;
       border: 2px solid white; 
       color: white;
     }
 
 .card-img-top{
-  justify-self: center;
-  text-align: center;
   margin-left: 0.8em;
 }
 
@@ -56,7 +62,7 @@ justify-content: space-between; /* align cards with equal spacing */
 text-align: center;
 margin: 3em 1em 1em 1em;
 width: 250px;
-height: 250px;
+height: 280px;
 border: 1px solid #000000;
 justify-content: center;
 border-radius: 1em;

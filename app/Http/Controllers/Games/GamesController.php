@@ -14,7 +14,7 @@ class GamesController extends Controller
 {
     public function index ()
     {
-        $games = GameModel::with('category')->get();
+        $games = GameModel::with('category')->where('status', true)->get();
         return view('games.index', compact('games'));
 
         // $games = GameModel::all();
@@ -28,6 +28,12 @@ class GamesController extends Controller
         return view('games.form', compact('categories'));
     }
     
+    public function editar($id)
+    {
+        $game = GameModel::find($id); // recuperamos el modelo correspondiente al registro que queremos actualizar
+        $categories = CategoryModel::all();
+        return view('games.form_edit', compact('game', 'categories'));
+    }
 
     public function store(Request $request): RedirectResponse
     {
@@ -68,11 +74,8 @@ class GamesController extends Controller
 
         $game->update();
 
-        if($game->update()){
-            return response()->json(['message' => 'Videojuego ' . $game->name . ' Actualizada con Exito', 'game' => $game], 201);
-        }
-        return response()->json(['error' => 'Fallo Al Actualizar VideoJuego: ' . $game->name], 404);
-       
+        return redirect(RouteServiceProvider::INDEX);
+
     }
 
     public function destroy(Request $request, $id)
@@ -91,11 +94,17 @@ class GamesController extends Controller
         // Guardar los cambios
         $game->save();
 
-        if($game->save()){
-            return response()->json(['message' => 'VideoJuego ' . $game->name .' Se ha ' . $mensaje . ' con Exito', 'game' => $game], 201);
-        }
-        return response()->json(['error' => 'No Se Ha ' . $mensaje . ' La VideoJuego: ' . $game->name], 404);
+        return redirect(RouteServiceProvider::ESTATUS);
 
+    }
 
+    public function estatus ()
+    {
+        $games = GameModel::with('category')->where('status', false)->get();
+        return view('games.estatus', compact('games'));
+
+        // $games = GameModel::all();
+        // return response()->json(['games' => $games], 200);
+        // return view('games.index', compact('games'));
     }
 }
