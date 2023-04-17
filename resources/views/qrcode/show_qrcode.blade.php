@@ -1,23 +1,4 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Laravel</title>
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-    <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/bootstrap.js'])
-
-</head>
-
-<body class="font-sans antialiased">
-
+<x-guest-layout>
     <div class="block mt-4">
         <label for="remember_me" class="inline-flex items-center">
             <span
@@ -28,31 +9,21 @@
             your authentication app</p>
         <br>
     </div>
-
+    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
     <script>
-        var channel = Echo.private('qr-scanned')
-            .listen('scan', function(data) {
-                console.log("PUTAAAAAAAAAAAAAAA", data)
-                alert(JSON.stringify(data));
-            });
-
-        // // Enable pusher logging - don't include this in production
-        // Pusher.logToConsole = true;
-
-        // var pusher = new Pusher('50febbf270e0acf49e54', {
-        //   cluster: 'us3'
-        // });
-
-        // var channel = pusher.subscribe('qr-scanned');
-        // // pusher.user.bind('qr-scanned', function(data){
-        // // })
-
-        // channel.bind('qr-scanned', function(data) {
-        //     console.log("PUTAAAAAAAAAAAAAAA", data)
-        //   alert(JSON.stringify(data.channel));
-        // });
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+        var pusher = new Pusher('50febbf270e0acf49e54', {
+            cluster: 'us3'
+        });
+        var channel = pusher.subscribe('qr-scanned');
+        channel.bind('scan', function(data) {
+            if(data.user.email == {!! json_encode($user) !!}){
+                alert(JSON.stringify(data.user.email));
+                window.location.href = "{{ route('qr_verified')}}";
+            }
+        });
     </script>
-
     <div class="block mt-5" style="display: flex; justify-content: center;">
         <label for="remember_me" class="inline-flex items-center">
             <span class="font-semibold  text-gray-800 dark:text-gray-200 leading-tight"
@@ -60,8 +31,5 @@
         </label>
     </div>
     <br>
-    <a href="{{ $url }}">{{ $url }}</a>
     <br>
-</body>
-
-</html>
+</x-guest-layout>

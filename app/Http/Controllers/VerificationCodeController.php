@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\VerificationCodeMailer;
 use App\Models\Codes\VerificationCode;
+use App\Models\Roles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
@@ -69,6 +70,7 @@ class VerificationCodeController extends Controller
      */
     public function validate_code_login(Request $request)
     {
+        $roles = new Roles();
         $login_code = $request->input('login_code');
         $user_codes = VerificationCode::where('user_id', Auth::user()->id)
             ->where('status', true)
@@ -76,14 +78,19 @@ class VerificationCodeController extends Controller
         foreach ($user_codes as $codes) {
             if (Hash::check($login_code, $codes->login_code)) {
                 $trust_code = VerificationCode::find($codes->id);
-                $trust_code->status = false;
+                // $trust_code->status = false;
                 $trust_code->save();
                 Session::put('code', $codes->login_code);
-                return redirect('dashboard');
+                // error_log($request->user()->role_id);
+                // error_log(json_decode($roles->getRoles())->supervisor);
+                if($request->user()->role_id == json_decode($roles->getRoles())->administrador){
+                    return redirect('qrcode');
+                }else{
+                    return redirect('dashboard');
+                }
             }
         }
-        // return redirect('verify/code');
-        return redirect('qrcode');
+        return redirect('verify_code');
     }
 
     /**
