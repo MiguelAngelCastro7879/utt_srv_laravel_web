@@ -1,5 +1,6 @@
-<x-guest-layout>
-    @csrf
+
+<template>
+    <Head title="Show_code" />
     <div class="block mt-4">
         <label for="remember_me" class="inline-flex items-center">
             <span class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">{{ __('Verify Code') }}</span>
@@ -17,5 +18,4 @@
         <br><br>
     </div>
 
-
-</x-guest-layout>
+</template>
