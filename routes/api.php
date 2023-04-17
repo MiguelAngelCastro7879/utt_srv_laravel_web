@@ -36,4 +36,5 @@ Route::get('/login-app-error', function(){
 })->name('login-app-error');
 
 Route::resource('categories', CategoryController::class)->only(['index', 'store','update','destroy']);
-Route::resource('games', GamesController::class)->only(['index', 'store','update','destroy']);
+Route::resource('games', GamesController::class)->only(['index','update','destroy']);
+Route::post('/new_game', [GamesController::class, 'store'])->name('new.game');

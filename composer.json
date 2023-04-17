@@ -10,7 +10,11 @@
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
+<<<<<<< HEAD
         "laravel/ui": "^4.2",
+=======
+        "laravelcollective/html": "^6.4",
+>>>>>>> PedroDSM
         "pusher/pusher-php-server": "^7.2",
         "simplesoftwareio/simple-qrcode": "^4.2"
     },

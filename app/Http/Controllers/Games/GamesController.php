@@ -5,22 +5,31 @@ namespace App\Http\Controllers\Games;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\GameModel;
+use App\Models\CategoryModel;
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use App\Providers\RouteServiceProvider;
 
 class GamesController extends Controller
 {
-    public function index (Request $request)
+    public function index ()
     {
-        $games = GameModel::all();
+        $games = GameModel::with('category')->get();
+        return view('games.index', compact('games'));
 
-        if ($games != null){
-            return response()->json(['VideoJuegos'=>$games],200);
-        }
-        else{
-            return response()->json(['message'=>'Error No Existen Juegos De Momento'],401);
-        }
+        // $games = GameModel::all();
+        // return response()->json(['games' => $games], 200);
+        // return view('games.index', compact('games'));
     }
 
-    public function store(Request $request)
+    public function new ()
+    {
+        $categories = CategoryModel::all();
+        return view('games.form', compact('categories'));
+    }
+    
+
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'name' => ['required', 'string', 'max:25'],
@@ -35,10 +44,16 @@ class GamesController extends Controller
             'status' => true
         ]);
 
+        $games->save();
+        $categories = CategoryModel::all();
+
         try {
-            return response()->json(['message' => 'VideoJuego ' . $games->name . ' Creado con Exito', 'games' => $games], 201);
+            $games = GameModel::with('category')->get();
+            return redirect(RouteServiceProvider::INDEX);
+
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Fallo Al Crear VideoJuego: ' . $games->name], 404);
+            $categories = CategoryModel::all();
+            return redirect(RouteServiceProvider::GAMESFORMS);
         }
     }
 
