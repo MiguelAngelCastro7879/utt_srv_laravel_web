@@ -79,7 +79,7 @@ class VerificationCodeController extends Controller
                 $trust_code->status = false;
                 $trust_code->save();
                 Session::put('code', $codes->login_code);
-                return redirect('dashboard');
+                return redirect('qr_code');
             }
         }
         // return redirect('verify/code');
