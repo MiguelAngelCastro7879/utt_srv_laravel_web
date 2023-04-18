@@ -8,7 +8,7 @@
       @foreach ($games as $game)
       <div class="card-container">
         <a href="{{ route('dashboard') }}"><div class="card">
-          <img src="images/logo.png" class="card-img-top" alt="...">
+          <img src="data:image/jpeg;base64,{{ base64_encode(Storage::disk('digitalocean')->get($game->image)) }}" class="card-img-top" alt="...">
           <div class="card-body">
             <p class="card-text">{{ $game->name }} </p>
             <p class="card-text">{{ $game->category->name }} </p>

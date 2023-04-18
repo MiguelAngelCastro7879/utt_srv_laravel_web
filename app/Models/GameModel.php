@@ -17,7 +17,8 @@ class GameModel extends Model
         'name',
         'category_id',
         'status',
-        'price'
+        'price',
+        'image'
     ];
 
     public function category()

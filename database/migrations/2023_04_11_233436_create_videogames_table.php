@@ -17,7 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('category_id'); // Agregar columna category_id
             $table->foreign('category_id')->references('id')->on('categories'); // Agregar llave foránea
             $table->decimal('price', $precision = 5, $scale = 2);
-            $table->boolean('status');
+            $table->boolean('status')->default(true);
+            $table->string('image');
             $table->timestamps();
         });
     }

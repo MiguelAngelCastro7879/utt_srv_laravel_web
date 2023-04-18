@@ -9,6 +9,9 @@ use App\Models\CategoryModel;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use App\Providers\RouteServiceProvider;
+use GuzzleHttp\Psr7\MimeType;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class GamesController extends Controller
 {
@@ -29,31 +32,30 @@ class GamesController extends Controller
     }
     
 
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:25'],
-            'category_id' => 'required',
-            'price' => 'required',
-        ]);
-
-        $games = GameModel::create([
-            'name' => $request->name,
-            'category_id' => $request->category_id,
-            'price' => $request->price,
-            'status' => true
-        ]);
-
-        $games->save();
-        $categories = CategoryModel::all();
-
         try {
-            $games = GameModel::with('category')->get();
+            // $request->validate([
+            //     'name' => ['required', 'string', 'max:25'],
+            //     'category_id' => 'required',
+            //     'price' => 'required',
+            //     'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            // ]);
+            
+            // return $request->all();
+            $file = $request->file('image')->store('image', 'digitalocean');
+            $games = GameModel::create([
+                'name' => $request->name,
+                'category_id' => $request->category_id,
+                'price' => $request->price,
+                'status' => true,
+                'image' => $file
+            ]);
+            $games->save();
             return redirect(RouteServiceProvider::INDEX);
 
         } catch (\Exception $e) {
-            $categories = CategoryModel::all();
-            return redirect(RouteServiceProvider::GAMESFORMS);
+            return response()->json(['error' => $e], 404);
         }
     }
 
@@ -97,5 +99,16 @@ class GamesController extends Controller
         return response()->json(['error' => 'No Se Ha ' . $mensaje . ' La VideoJuego: ' . $game->name], 404);
 
 
+    }
+    public function showimage()
+    {
+        // $file = Storage::disk('digitalocean')->url('imageV3xDIYdRzS41bZuvANsydNf5z35FovysnNWfcmEm.png');
+        $file = Storage::disk('digitalocean')->get('image/mvTc8vWfUC2pq33aKvG3CtdLSplc6iZHM4IqP34e.webp');
+        // mime_content_type('image/mvTc8vWfUC2pq33aKvG3CtdLSplc6iZHM4IqP34e.webp');
+        $mimetype = MimeType::fromFilename('image/mvTc8vWfUC2pq33aKvG3CtdLSplc6iZHM4IqP34e.webp');
+        $headers = [
+            // 'Content-Type' => $mimetype,
+        ];
+        return response($file, 200, $headers);
     }
 }

@@ -23,16 +23,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified', 'code_verified', 'qr_verified'])->name('dashboard');
 
-Route::get('/catalogos', function () {
-    return view('Dashboard/catalog');
-})->middleware(['auth', 'verified', 'code_verified', 'qr_verified'])->name('catalogos');
-Route::get('/Videojuegos', [GamesController::class, 'index'])->middleware(['auth', 'verified', 'code_verified'])->name('Videojuegos');
+Route::middleware(['auth', 'verified', 'code_verified', 'qr_verified'])->group(function () {
+    Route::get('/dashboard', function () { return view('dashboard'); })->name('dashboard');
+    Route::get('/catalogos', function () { return view('Dashboard/catalog'); })->name('catalogos');
+    Route::get('/Videojuegos', [GamesController::class, 'index'])->name('Videojuegos');
+    Route::get('/Nuevo', [GamesController::class, 'new'])->name('Nuevo');
+});
 
-Route::get('/Nuevo', [GamesController::class, 'new'])->middleware(['auth', 'verified', 'code_verified'])->name('Nuevo');
+    // ->middleware(['auth', 'verified', 'code_verified'])
+
 // Route::post('/Nuevo', [GamesController::class, 'new'])->name('Nuevo');
 
 Route::middleware(['auth', 'code_verified', 'qr_verified'])->group(function () {
@@ -50,7 +50,7 @@ Route::get('/code', [VerificationCodeController::class, 'show'])->middleware('si
 Route::middleware(['auth'])->get('/qrcode', [QrCodeController::class, 'show'])->name('qr_code'); // Esta ruta es la que muestra el qr en web
 Route::get('/qrcode/verified', [QrCodeController::class, 'qr_verified'])->name('qr_verified'); // Esta ruta es la que valida el codigo web
 
-
+Route::get('/show/image', [GamesController::class, 'showimage']);
 
 
 require __DIR__.'/auth.php';
