@@ -46,6 +46,9 @@ class AuthenticatedSessionController extends Controller
                 return redirect()->intended(RouteServiceProvider::VERIFY_CODE);
             } 
         }
+        $request->authenticate();
+
+        $request->session()->regenerate();
         return redirect('login');
     }
 

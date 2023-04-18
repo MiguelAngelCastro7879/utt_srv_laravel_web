@@ -1,9 +1,23 @@
 <x-app-layout>
     <x-auth-session-status class="mb-4" :status="session('status')" />
+    <div class= "row">
+
+        <form method="POST" action="{{ route('new.token') }}">
+            @csrf
+            <button type="submit" class="btn btn-primary boton">Pedir Token</button>
+        </form>
+        
+        <a href="{{ url('Videojuegos') }}" class="btn btn-primary boton">Regresar</a>
+    </div><br><br><br>
+
     <x-guest-layout>
     <form method="POST" action="{{ route('update.game', ['id' => $game->id]) }}">
         @csrf
         @method('PUT')
+        <div class="form-group">
+            <label for="token">Token</label><br>
+            <input type="text" name="token" id="token" class="form-control">
+        </div>
         <div class="form-group">
             <label for="name">Nombre</label><br>
             <input type="text" name="name" id="name" class="form-control" value="{{ $game->name }}">
@@ -29,6 +43,25 @@
 </x-app-layout>
 
 <style>
+
+.boton {
+          transition-duration: 0.4s;
+          border-radius: 12px;
+          font-size: 15px;
+          text-align:center;
+          background-color: transparent;
+          color: white;
+          border: black; 
+          padding: 14px 40px;
+          margin: 1em 1em 0em 1em;
+          float: right;
+        }
+    
+        .boton:hover {
+          background-color: transparent;
+          border: 2px solid white; 
+          color: white;
+        }
     .button {
       transition-duration: 0.4s;
       border-radius: 12px;
