@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::middleware('auth:sanctum')->post('/verify/qrcode', [QrCodeController::class, 'verify_qr'])->name('verify_qr'); // Esta ruta es la que valida el codigo web
+// Route::post('/verify/qrcode', [QrCodeController::class, 'verify_qr'])->name('verify_qr'); // Esta ruta es la que valida el codigo web
 
 Route::post('/validate/aplication/code', [VerificationCodeController::class, 'validate_code_application']);
 

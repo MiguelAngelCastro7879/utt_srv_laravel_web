@@ -22,7 +22,12 @@ class QrCodeController extends Controller
         $user = $request->user();
         event(new QrScannerEvent($user));
         // return 'fired';
-        # code...
+        // error_log($user);
+        // error_log("hola");
+        // # code...
+        return response()->json([
+            'status' => true
+        ], 201);
     }
 
     public function qr_verified()
