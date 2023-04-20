@@ -118,11 +118,11 @@ class GamesCodesController extends Controller
     public function token_destroy_sent(Request $request)
     {
         $encryption_key = env('CRYPT_KEY');
-        $codes = GamesCodes::where('status', 1)->get();
+        $codes = GamesCodes::where('status', 2)->get();
         foreach ($codes as $code) {
             if($request->upd_token ==  Crypt::decryptString($code->codigo, $encryption_key)){
-                Session::put('codigo_juego', $code->codigo);
-                return redirect('Actualizar/'.Session::get('url-game')); 
+                Session::put('codigo_eliminacion', $code->codigo);
+                return redirect('delete/games/'.Session::get('url-game')); 
             }
         }
         return back();

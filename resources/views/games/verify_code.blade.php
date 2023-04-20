@@ -19,22 +19,40 @@
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight" style="  position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%); font-size:2em;">
-            {{ __('Codigo de Actualizacion') }}
-        </h2>
+        @if ($type == 'update')
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight" style="  position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%); font-size:2em;">
+                {{ __('Codigo de Actualizacion') }}
+            </h2>
+        @else
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight" style="  position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%); font-size:2em;">
+                {{ __('Codigo de Eliminacion') }}
+            </h2>
+        @endif
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100" style="  position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);">
-                    <form method="POST" action="{{ route('token_update_sent') }}">
+                    @if ($type == 'update')
+                        <form method="POST" action="{{ route('token_update_sent') }}">
+                            @csrf
+                            <div>
+                                <x-text-input id="upd_token" class="textview" type="text" name="upd_token" :value="old('upd_token')" required autofocus/>
+                                <x-input-error :messages="$errors->get('upd_token')" class="mt-2" />
+                            </div>
+                            <button class="button">Aceptar</button>
+                        </form>
+                    @else
+                        
+                    <form method="POST" action="{{ route('token_destroy_sent') }}">
                         @csrf
                         <div>
-                            <x-text-input id="upd_token" class="textview" type="text" name="upd_token" :value="old('upd_token')" required autofocus/>
-                            <x-input-error :messages="$errors->get('upd_token')" class="mt-2" />
+                            <x-text-input id="delete_token" class="textview" type="text" name="delete_token" :value="old('delete_token')" required autofocus/>
+                            <x-input-error :messages="$errors->get('delete_token')" class="mt-2" />
                         </div>
                         <button class="button">Aceptar</button>
                     </form>
+                    @endif
                 </div>
             </div>
         </div>

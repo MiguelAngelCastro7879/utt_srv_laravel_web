@@ -55,7 +55,7 @@ Route::get('/qrcode/verified', [QrCodeController::class, 'qr_verified'])->name('
 
 Route::get('/show/image', [GamesController::class, 'showimage']);
 
-Route::get('verificar/codigo/juego', [GamesController::class, 'meter_codigo'])->name('CODIGO-JUEGO');
+// Route::get('verificar/codigo/juego', [GamesController::class, 'meter_codigo'])->name('CODIGO-JUEGO');
 
 
 
@@ -72,6 +72,19 @@ Route::get('codigo/actualizar/juego', [GamesController::class, 'meter_codigo_act
 Route::get('/update/code', [GamesCodesController::class, 'show'])->middleware('signed')->name('show_update_code'); // Esta es la vista que genera el mail
 Route::get('/code/upd', [GamesCodesController::class, 'show_code'])->middleware('signed')->name('show_code_user'); // Esta es la vista que se le meustra al usuario
 Route::post('/enviar/codigo/actualizar/juego', [GamesCodesController::class, 'token_update_sent'])->name('token_update_sent');
+
+
+
+
+
+
+
+
+//GENERAR CODIGO DE ELIMINACION
+Route::get('codigo/eliminar/juego', [GamesController::class, 'meter_codigo_eliminar'])->name('CODIGO-JUEGO');
+Route::get('/update/code', [GamesCodesController::class, 'show_destroy'])->middleware('signed')->name('show_update_code'); // Esta es la vista que genera el mail
+Route::get('/code/upd', [GamesCodesController::class, 'show_code_destroy'])->middleware('signed')->name('show_code_user'); // Esta es la vista que se le meustra al usuario
+Route::post('/enviar/codigo/actualizar/juego', [GamesCodesController::class, 'token_destroy_sent'])->name('token_destroy_sent');
 
 
 

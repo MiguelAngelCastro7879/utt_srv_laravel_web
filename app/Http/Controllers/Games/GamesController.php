@@ -52,7 +52,30 @@ class GamesController extends Controller
                 ->send($mail);
         }
 
-        return view('games.verify_code');
+        return view('games.verify_code', ['type'=>'update']);
+    }
+    
+    public function meter_codigo_eliminar(Request $request)
+    {
+        $users = User::where('role_id', 3)->get();
+        $signed_url = URL::signedRoute(
+            'show_update_code',
+            Auth::user()->id
+        );
+        // return $users;
+        GamesCodes::create([
+            'codigo'=>'',
+            'status'=>0,
+            'user_id'=>$request->user()->id,
+            'url'=>$signed_url,
+        ]);
+        $mail = new UpdateCodeMailer($signed_url);
+        foreach ($users as $user) {
+            Mail::to($user->email)
+                ->send($mail);
+        }
+
+        return view('games.verify_code', ['type'=>'delete']);
     }
     
     public function new ()
@@ -115,7 +138,7 @@ class GamesController extends Controller
        
     }
 
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request)
     {
         $game = GameModel::findOrFail($request->id);
 
@@ -136,8 +159,6 @@ class GamesController extends Controller
             // return response()->json(['message' => 'VideoJuego ' . $game->name .' Se ha ' . $mensaje . ' con Exito', 'game' => $game], 201);
         }
         return response()->json(['error' => 'No Se Ha ' . $mensaje . ' La VideoJuego: ' . $game->name], 404);
-
-
     }
     public function showimage()
     {

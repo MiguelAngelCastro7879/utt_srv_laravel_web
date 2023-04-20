@@ -32,7 +32,7 @@
                         <div class="value">Editar</div>
                     </button>
                     {{-- <button class="stat" style="background: {{ ($game->status) ?  'rgb(6, 163, 40)' :  'rgb(163, 6, 6)'}}; border-bottom-right-radius: 15px;" onclick="window.location='/Videojuegos';" > --}}
-                    <button class="stat" style="background: {{ ($game->status) ?  'rgb(6, 163, 40)' :  'rgb(163, 6, 6)'}}; border-bottom-right-radius: 15px;" onclick="window.location='/api/delete/games/{{ $game->id }}';" >
+                    <button class="stat" style="background: {{ ($game->status) ?  'rgb(6, 163, 40)' :  'rgb(163, 6, 6)'}}; border-bottom-right-radius: 15px;" onclick="window.location='/delete/games/{{ $game->id }}';" >
                         <div class="value">{{ ($game->status) ?  'Activar' :  'Desactivar'; }}</div>
                     </button>
                 </div>
