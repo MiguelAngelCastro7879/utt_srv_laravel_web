@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Games\CategoryController;
 use App\Http\Controllers\Games\GamesController;
+use App\Http\Controllers\GamesCodesController;
 use App\Http\Controllers\QrCodeController;
 
 /*
@@ -37,5 +38,12 @@ Route::get('/login-app-error', function(){
 })->name('login-app-error');
 
 Route::resource('categories', CategoryController::class)->only(['index', 'store','update','destroy']);
-Route::resource('games', GamesController::class)->only(['index','update','destroy']);
+Route::resource('games', GamesController::class)->only(['index','update']);
 Route::post('/new_game', [GamesController::class, 'store'])->name('new.game');
+
+
+
+
+
+//EDICION DE JUEGO
+Route::get('enviar/codigo/actualizar/{id}', [GamesCodesController::class, 'send_update']);

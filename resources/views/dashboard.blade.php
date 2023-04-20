@@ -32,10 +32,6 @@
   font-weight: 300;
   src: local('Monoton'), local('Monoton-Regular'), url(http://themes.googleusercontent.com/static/fonts/monoton/v4/AKI-lyzyNHXByGHeOcds_w.woff) format('woff');
 }
-
-body{
-  background-color: #222222;
-}
 /*neon effect*/
 p{
   text-align:center;

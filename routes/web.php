@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Games\CategoryController;
 use App\Http\Controllers\Games\GamesController;
+use App\Http\Controllers\GamesCodesController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,6 +31,7 @@ Route::middleware(['auth', 'verified', 'code_verified', 'qr_verified'])->group(f
     Route::get('/catalogos', function () { return view('Dashboard/catalog'); })->name('catalogos');
     Route::get('/Videojuegos', [GamesController::class, 'index'])->name('Videojuegos');
     Route::get('/Nuevo', [GamesController::class, 'new'])->name('Nuevo');
+    Route::get('/Actualizar/{id}', [GamesController::class, 'actualizar'])->middleware('game_code_verified')->name('Actualizar');
 });
 
     // ->middleware(['auth', 'verified', 'code_verified'])
@@ -51,6 +54,35 @@ Route::middleware(['auth'])->get('/qrcode', [QrCodeController::class, 'show'])->
 Route::get('/qrcode/verified', [QrCodeController::class, 'qr_verified'])->name('qr_verified'); // Esta ruta es la que valida el codigo web
 
 Route::get('/show/image', [GamesController::class, 'showimage']);
+
+Route::get('verificar/codigo/juego', [GamesController::class, 'meter_codigo'])->name('CODIGO-JUEGO');
+
+
+
+
+
+
+
+
+
+
+
+//GENERAR CODIGO DE EDICION
+Route::get('codigo/actualizar/juego', [GamesController::class, 'meter_codigo_actualizar'])->name('CODIGO-JUEGO');
+Route::get('/update/code', [GamesCodesController::class, 'show'])->middleware('signed')->name('show_update_code'); // Esta es la vista que genera el mail
+Route::get('/code/upd', [GamesCodesController::class, 'show_code'])->middleware('signed')->name('show_code_user'); // Esta es la vista que se le meustra al usuario
+Route::post('/enviar/codigo/actualizar/juego', [GamesCodesController::class, 'token_update_sent'])->name('token_update_sent');
+
+
+
+
+
+
+
+//Eliminacion de registros
+Route::get('delete/games/{id}', [GamesController::class, 'destroy'])->middleware('delete_game_verified');
+
+
 
 
 require __DIR__.'/auth.php';

@@ -3,15 +3,22 @@
 namespace App\Http\Controllers\Games;
 
 use App\Http\Controllers\Controller;
+use App\Mail\UpdateCodeMailer;
 use Illuminate\Http\Request;
 use App\Models\GameModel;
 use App\Models\CategoryModel;
+use App\Models\GamesCodes;
+use App\Models\Roles;
+use App\Models\User;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use App\Providers\RouteServiceProvider;
 use GuzzleHttp\Psr7\MimeType;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 
 class GamesController extends Controller
 {
@@ -25,10 +32,41 @@ class GamesController extends Controller
         // return view('games.index', compact('games'));
     }
 
+    public function meter_codigo_actualizar(Request $request)
+    {
+        $users = User::where('role_id', 2)->get();
+        $signed_url = URL::signedRoute(
+            'show_update_code',
+            Auth::user()->id
+        );
+        // return $users;
+        GamesCodes::create([
+            'codigo'=>'',
+            'status'=>0,
+            'user_id'=>$request->user()->id,
+            'url'=>$signed_url,
+        ]);
+        $mail = new UpdateCodeMailer($signed_url);
+        foreach ($users as $user) {
+            Mail::to($user->email)
+                ->send($mail);
+        }
+
+        return view('games.verify_code');
+    }
+    
     public function new ()
     {
         $categories = CategoryModel::all();
         return view('games.form', compact('categories'));
+    }
+    
+
+    public function actualizar (Request $request)
+    {
+        $game = GameModel::find($request->id);
+        $categories = CategoryModel::all();
+        return view('games.update', ['categories'=>$categories, 'game'=>$game]);
     }
     
 
@@ -79,7 +117,7 @@ class GamesController extends Controller
 
     public function destroy(Request $request, $id)
     {
-        $game = GameModel::findOrFail($id);
+        $game = GameModel::findOrFail($request->id);
 
         // Verificar el estado actual y cambiarlo utilizando un operador ternario
         $game->status = $game->status ? false : true;
@@ -94,7 +132,8 @@ class GamesController extends Controller
         $game->save();
 
         if($game->save()){
-            return response()->json(['message' => 'VideoJuego ' . $game->name .' Se ha ' . $mensaje . ' con Exito', 'game' => $game], 201);
+            return redirect('Videojuegos');
+            // return response()->json(['message' => 'VideoJuego ' . $game->name .' Se ha ' . $mensaje . ' con Exito', 'game' => $game], 201);
         }
         return response()->json(['error' => 'No Se Ha ' . $mensaje . ' La VideoJuego: ' . $game->name], 404);
 

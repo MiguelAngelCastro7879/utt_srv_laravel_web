@@ -25,29 +25,6 @@
             </main>
         </div>
     </body>
-
-    <footer>
-        <div class="container">
-           <div class="row">
-              <div class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
-                <div style="float: left; margin-left:3em;">
-                    <img src="images/COYOTE.png" width="119" height="119">
-                </div>
-                <div style="float: right; margin-right: 3em; margin-top: 2.5em;">
-                    <img src="images/utt.png" width="325" height="350">
-                </div>
-                <div>
-
-                    <h2 class="color">Derechos de Autor: </h2>
-                    <h2 class="color">Miguel Castro </h2>
-                    <h2 class="color">Fernanda Murillo </h2>
-                    <h2 class="color">Pedro De Santiago </h2>
-
-                </div>
-              </div>
-           </div>
-        </div>
-     </footer>
 </html>
 
 <style>

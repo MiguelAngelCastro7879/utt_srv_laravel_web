@@ -65,5 +65,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'code_verified' => \App\Http\Middleware\CodeVerified::class,
         'qr_verified' => \App\Http\Middleware\QrVerified::class,
+        'game_code_verified' => \App\Http\Middleware\UpdateGame::class,
+        'delete_game_verified' => \App\Http\Middleware\DeleteGame::class,
     ];
 }
