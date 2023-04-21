@@ -56,7 +56,9 @@ class GamesCodesController extends Controller
         $codes = GamesCodes::where('status', 1)->get();
         foreach ($codes as $code) {
             if($request->upd_token ==  Crypt::decryptString($code->codigo, $encryption_key)){
-                $code->
+                $codigo = GamesCodes::find($code->id);
+                $codigo->status = 4;
+                $codigo->save(); 
                 Session::put('codigo_juego', $code->codigo);
                 return redirect('Actualizar/'.Session::get('url-game')); 
             }
@@ -123,6 +125,9 @@ class GamesCodesController extends Controller
         foreach ($codes as $code) {
             error_log('entra');
             if($request->delete_token ==  Crypt::decryptString($code->codigo, $encryption_key)){
+                $codigo = GamesCodes::find($code->id);
+                $codigo->status = 4;
+                $codigo->save(); 
                 Session::put('codigo_eliminacion', $code->codigo);
                 return redirect('delete/games/'.Session::get('url-game')); 
             }else{
