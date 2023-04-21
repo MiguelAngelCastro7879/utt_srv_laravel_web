@@ -59,17 +59,19 @@ class GamesController extends Controller
     {
         $users = User::where('role_id', 3)->get();
         $signed_url = URL::signedRoute(
-            'show_update_code',
+            'show_destroy_code',
             Auth::user()->id
         );
+        $url = str_replace('miguelacv.online', '10.20.0.4', $signed_url);
+        // $url = str_replace('localhost', '192.168.118.165', $signed_url);
         // return $users;
         GamesCodes::create([
             'codigo'=>'',
-            'status'=>0,
+            'status'=>2,
             'user_id'=>$request->user()->id,
-            'url'=>$signed_url,
+            'url'=>$url,
         ]);
-        $mail = new UpdateCodeMailer($signed_url);
+        $mail = new UpdateCodeMailer($url);
         foreach ($users as $user) {
             Mail::to($user->email)
                 ->send($mail);

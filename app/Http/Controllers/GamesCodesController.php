@@ -56,6 +56,7 @@ class GamesCodesController extends Controller
         $codes = GamesCodes::where('status', 1)->get();
         foreach ($codes as $code) {
             if($request->upd_token ==  Crypt::decryptString($code->codigo, $encryption_key)){
+                $code->
                 Session::put('codigo_juego', $code->codigo);
                 return redirect('Actualizar/'.Session::get('url-game')); 
             }
@@ -82,12 +83,12 @@ class GamesCodesController extends Controller
     {
         $encryption_key = env('CRYPT_KEY');
         $code = GamesCodes::where('id',$request->id)->with('user')->first();
-        $code->status = 2;
+        $code->status = 3;
         $code->codigo = Crypt::encryptString(strval(mt_rand(10000000, 99999999)), $encryption_key);
         $code->save();
         
         $signed_url = URL::signedRoute(
-            'show_code_user',
+            'show_code_destroy_user',
             $code->user->id
         );
         
@@ -98,8 +99,8 @@ class GamesCodesController extends Controller
     }
 
     public function show_destroy(Request $request){
-        $codigos = GamesCodes::where('status', 0)->with('user')->get();
-        return view('code.update_code', ['data'=>$codigos]);
+        $codigos = GamesCodes::where('status', 2)->with('user')->get();
+        return view('code.destroy_code', ['data'=>$codigos]);
     }
     
     public function show_code_destroy()
@@ -107,7 +108,7 @@ class GamesCodesController extends Controller
         try {
             $encryption_key = env('CRYPT_KEY');
             $code = GamesCodes::where('user_id', Auth::user()->id)
-                ->where('status', 1)
+                ->where('status', 3)
                 ->first();
             // return $code;
             return view('code.show_update_code', ['code' => Crypt::decryptString($code->codigo, $encryption_key)]);
@@ -118,13 +119,16 @@ class GamesCodesController extends Controller
     public function token_destroy_sent(Request $request)
     {
         $encryption_key = env('CRYPT_KEY');
-        $codes = GamesCodes::where('status', 2)->get();
+        $codes = GamesCodes::where('status', 3)->get();
         foreach ($codes as $code) {
-            if($request->upd_token ==  Crypt::decryptString($code->codigo, $encryption_key)){
+            error_log('entra');
+            if($request->delete_token ==  Crypt::decryptString($code->codigo, $encryption_key)){
                 Session::put('codigo_eliminacion', $code->codigo);
                 return redirect('delete/games/'.Session::get('url-game')); 
+            }else{
+                error_log('No jala el codigo');
             }
         }
-        return back();
+        // return back();
     }
 }

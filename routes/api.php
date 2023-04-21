@@ -47,3 +47,7 @@ Route::post('/new_game', [GamesController::class, 'store'])->name('new.game');
 
 //EDICION DE JUEGO
 Route::get('enviar/codigo/actualizar/{id}', [GamesCodesController::class, 'send_update']);
+
+
+//EDICION DE JUEGO
+Route::get('enviar/codigo/eliminar/{id}', [GamesCodesController::class, 'send_destroy']);
