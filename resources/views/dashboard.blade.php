@@ -3,7 +3,7 @@
     <div class="container">
 
         <p><a href="">
-          The All-Star Store
+          The All-Star Store Servidor 1
         </a></p>
 
         <div class="image">
