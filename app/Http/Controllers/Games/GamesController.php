@@ -134,6 +134,7 @@ class GamesController extends Controller
         $game->update();
 
         if($game->update()){
+            return redirect(RouteServiceProvider::INDEX);
             return response()->json(['message' => 'Videojuego ' . $game->name . ' Actualizada con Exito', 'game' => $game], 201);
         }
         return response()->json(['error' => 'Fallo Al Actualizar VideoJuego: ' . $game->name], 404);
