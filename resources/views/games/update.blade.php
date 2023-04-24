@@ -3,7 +3,7 @@
 
 
     <x-guest-layout>
-    <form method="POST" action="{{ route('update.game') }}"  enctype="multipart/form-data">
+    <form method="POST" action="{{ route('update.game',['id'=> $game->id]) }}"  enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="name">Nombre</label><br>
