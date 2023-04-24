@@ -48,9 +48,9 @@ class AuthenticatedSessionController extends Controller
                     return redirect()->intended(RouteServiceProvider::VERIFY_CODE);
                 } 
             }
-            return abort(419, 'El usuario no existe');
+            return abort(403, 'El usuario no existe');
         } catch (\Throwable $th) {
-            return abort(419, 'Error al iniciar session');
+            return abort(403, 'Sesion expirada');
         }
     }
 
