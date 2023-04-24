@@ -39,7 +39,7 @@ Route::get('/login-app-error', function(){
 
 Route::resource('categories', CategoryController::class)->only(['index', 'store','update','destroy']);
 Route::resource('games', GamesController::class)->only(['index']);
-Route::put('/update_game/{id}', [GamesController::class, 'update'])->name('update.game');
+Route::post('/update_game/{id}', [GamesController::class, 'update'])->name('update.game');
 Route::post('/new_game', [GamesController::class, 'store'])->name('new.game');
 
 
