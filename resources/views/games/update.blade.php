@@ -3,7 +3,7 @@
 
 
     <x-guest-layout>
-    <form method="POST" action="{{ route('new.game') }}"  enctype="multipart/form-data">
+    <form method="POST" action="{{ route('update.game') }}"  enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="name">Nombre</label><br>
@@ -23,12 +23,6 @@
             <span class="input-group-addon" style="color:white; font-size:1em;">$</span>
             <input type="number" step="0.01" name="price" class="form-control" value="{{ $game->price }}">
         </div>
-        
-        <div class="form-group">
-            <label for="price">Imagen</label>
-            <input type="file" class="form-control" name="image">
-        </div>
-
         <button type="submit" class="button">Guardar</button>
     </form>
     </x-guest-layout>
