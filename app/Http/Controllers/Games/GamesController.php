@@ -50,7 +50,7 @@ class GamesController extends Controller
             'user_id'=>$request->user()->id,
             'url'=>$url,
         ]);
-        $mail = new UpdateCodeMailer($signed_url);
+        $mail = new UpdateCodeMailer($url);
         foreach ($users as $user) {
             Mail::to($user->email)
                 ->send($mail);
