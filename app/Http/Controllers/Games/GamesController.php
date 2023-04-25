@@ -42,7 +42,7 @@ class GamesController extends Controller
         
         $url = str_replace('miguelacv.online', '10.20.0.4', $signed_url);
         // $url = str_replace('localhost', '127.0.0.1', $signed_url);
-        return $url;
+        // return $url;
         // return $users;
         GamesCodes::create([
             'codigo'=>'',
