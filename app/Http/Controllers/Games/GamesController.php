@@ -40,7 +40,7 @@ class GamesController extends Controller
             Auth::user()->id
         );
         
-        $url = str_replace('miguelacv.online', '10.20.0.4', $signed_url);
+        $url = str_replace('https://miguelacv.online', '10.20.0.4', $signed_url);
         // $url = str_replace('localhost', '127.0.0.1', $signed_url);
         // return $url;
         // return $users;
@@ -66,7 +66,7 @@ class GamesController extends Controller
             'show_destroy_code',
             Auth::user()->id
         );
-        $url = str_replace('miguelacv.online', '10.20.0.4', $signed_url);
+        $url = str_replace('https://miguelacv.online', '10.20.0.4', $signed_url);
         // $url = str_replace('localhost', '192.168.118.165', $signed_url);
         return $url;
         GamesCodes::create([
