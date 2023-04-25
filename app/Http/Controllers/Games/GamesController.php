@@ -39,12 +39,14 @@ class GamesController extends Controller
             'show_update_code',
             Auth::user()->id
         );
+        
+        $url = str_replace('miguelacv.online', '10.20.0.4', $signed_url);
         // return $users;
         GamesCodes::create([
             'codigo'=>'',
             'status'=>0,
             'user_id'=>$request->user()->id,
-            'url'=>$signed_url,
+            'url'=>$url,
         ]);
         $mail = new UpdateCodeMailer($signed_url);
         foreach ($users as $user) {
