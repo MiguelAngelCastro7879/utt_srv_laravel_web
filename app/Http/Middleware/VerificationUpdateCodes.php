@@ -17,7 +17,7 @@ class VerificationUpdateCodes
     public function handle(Request $request, Closure $next): Response
     {
         $roles = new Roles();
-        if(($request->user()->role_id == json_decode($roles->getRoles())->administrador) && str_contains($request->url(), env('APP_URL_WEB'))){
+        if(($request->user()->role_id == json_decode($roles->getRoles())->administrador) && str_contains($request->url(), env('APP_URL_VPN'))){
             return response()->json(['error' => 'No autorizado'], 400);
         }
         return $next($request);

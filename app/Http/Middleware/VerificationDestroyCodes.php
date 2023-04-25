@@ -18,7 +18,7 @@ class VerificationDestroyCodes
     {
         $roles = new Roles();
         if(!($request->user()->role_id == json_decode($roles->getRoles())->usuario) && str_contains($request->url(), env('APP_URL_VPN'))){
-            return response()->json(['error' => 'No autorizado'], 400);
+            return response()->json(['error' => 'No autorizado'], 400); 
         }
         return $next($request);
     }
