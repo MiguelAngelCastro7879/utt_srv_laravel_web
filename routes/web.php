@@ -69,7 +69,7 @@ Route::get('/show/image', [GamesController::class, 'showimage']);
 
 //GENERAR CODIGO DE EDICION
 Route::get('codigo/actualizar/juego', [GamesController::class, 'meter_codigo_actualizar'])->name('CODIGO-JUEGO');
-Route::get('/update/code', [GamesCodesController::class, 'show'])->middleware(['signed', 'updatess'])->name('show_update_code'); // Esta es la vista que genera el mail
+Route::get('/update/code', [GamesCodesController::class, 'show'])->middleware(['updatess'])->name('show_update_code'); // Esta es la vista que genera el mail
 Route::get('/code/upd', [GamesCodesController::class, 'show_code'])->middleware('signed')->name('show_code_user'); // Esta es la vista que se le meustra al usuario
 Route::post('/enviar/codigo/actualizar/juego', [GamesCodesController::class, 'token_update_sent'])->name('token_update_sent');
 
@@ -82,7 +82,7 @@ Route::post('/enviar/codigo/actualizar/juego', [GamesCodesController::class, 'to
 
 //GENERAR CODIGO DE ELIMINACION
 Route::get('codigo/eliminar/juego', [GamesController::class, 'meter_codigo_eliminar'])->name('CODIGO-JUEGO');
-Route::get('/destroy/code', [GamesCodesController::class, 'show_destroy'])->middleware(['signed', 'destroyss'])->name('show_destroy_code'); // Esta es la vista que genera el mail
+Route::get('/destroy/code', [GamesCodesController::class, 'show_destroy'])->middleware(['destroyss'])->name('show_destroy_code'); // Esta es la vista que genera el mail
 Route::get('/code/dest', [GamesCodesController::class, 'show_code_destroy'])->middleware('signed')->name('show_code_destroy_user'); // Esta es la vista que se le meustra al usuario
 Route::post('/enviar/codigo/eliminar/juego', [GamesCodesController::class, 'token_destroy_sent'])->name('token_destroy_sent');
 
