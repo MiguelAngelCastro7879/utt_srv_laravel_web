@@ -26,7 +26,7 @@ class GamesCodesController extends Controller
             $code->user->id
         );
         
-        $url = str_replace('10.20.0.4','miguelacv.online', $signed_url);
+        $url = str_replace('10.20.0.4','https://miguelacv.online', $signed_url);
         
         $mail = new UpdateCodeMailer($url);
         Mail::to($code->user->email)
@@ -96,7 +96,7 @@ class GamesCodesController extends Controller
             $code->user->id
         );
         
-        $url = str_replace('10.20.0.4','miguelacv.online', $signed_url);
+        $url = str_replace('10.20.0.4','https://miguelacv.online', $signed_url);
         
         $mail = new UpdateCodeMailer($url);
         Mail::to($code->user->email)
