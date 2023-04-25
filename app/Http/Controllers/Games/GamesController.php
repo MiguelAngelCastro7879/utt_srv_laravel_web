@@ -68,7 +68,7 @@ class GamesController extends Controller
         );
         $url = str_replace('https://miguelacv.online', 'http://10.20.0.4', $signed_url);
         // $url = str_replace('localhost', '192.168.118.165', $signed_url);
-        return $url;
+        // return $url;
         GamesCodes::create([
             'codigo'=>'',
             'status'=>2,
